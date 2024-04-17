@@ -40,10 +40,32 @@ impl Default for Person {
 // If while parsing the age, something goes wrong, then return the default of
 // Person Otherwise, then return an instantiated Person object with the results
 
-// I AM NOT DONE
 
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        if s.len() == 0 || s.split(",").count() != 2{
+            return Person::default();
+        }
+        let mut split = s.split(",");
+        let name = split.next().unwrap();
+        if name.len() == 0 {
+            return Person::default();
+        }
+        let age = split.next().unwrap();
+        let age = match age.parse::<usize>() {
+            Ok(parsed_age) => {
+                // 可以安全地使用已解析的年龄
+                parsed_age
+            }
+            Err(_) => {
+                // 处理解析失败的情况，例如返回默认值或者报告错误
+                return Person::default();
+            }
+        };
+        return Person {
+            name: String::from(name),
+            age,
+        };
     }
 }
 
@@ -70,6 +92,7 @@ mod tests {
     fn test_bad_convert() {
         // Test that John is returned when bad string is provided
         let p = Person::from("");
+        // print!("{:?}", p);
         assert_eq!(p.name, "John");
         assert_eq!(p.age, 30);
     }
