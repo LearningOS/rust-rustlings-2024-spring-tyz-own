@@ -30,8 +30,8 @@ unsafe fn modify_by_address(address: usize) {
     // TODO: Fill your safety notice of the code block below to match your
     // code's behavior and the contract of this function. You may use the
     // comment of the test below as your format reference.
+    let a = address as *mut u32;
     unsafe {
-        let a = address as *mut u32;
         *a = 0xAABBCCDD;
     }
 }
