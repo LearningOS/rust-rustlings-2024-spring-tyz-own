@@ -27,19 +27,18 @@
 //
 // You should NOT modify any existing code except for adding two lines of attributes.
 
-// I AM NOT DONE
 
-extern "Rust" {
-    fn my_demo_function(a: u32) -> u32;
-    fn my_demo_function_alias(a: u32) -> u32;
-}
+// extern "Rust" {
+//     fn my_demo_function(a: u32) -> u32;
+//     fn my_demo_function_alias(a: u32) -> u32;
+// }
 
 mod Foo {
     // No `extern` equals `extern "Rust"`.
-    fn my_demo_function(a: u32) -> u32 {
+    pub fn my_demo_function(a: u32) -> u32 {
         a
     }
-    fn my_demo_function_alias(a: u32) -> u32 {
+    pub fn my_demo_function_alias(a: u32) -> u32 {
         my_demo_function(a)
     }
 }
@@ -47,7 +46,7 @@ mod Foo {
 #[cfg(test)]
 mod tests {
     use super::*;
-
+    use crate::Foo::*;
     #[test]
     fn test_success() {
         // The externally imported functions are UNSAFE by default

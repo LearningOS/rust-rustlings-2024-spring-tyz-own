@@ -3,7 +3,6 @@
 	This problem requires you to implement a basic interface for a binary tree
 */
 
-//I AM NOT DONE
 use std::cmp::Ordering;
 use std::fmt::Debug;
 
@@ -51,12 +50,21 @@ where
     // Insert a value into the BST
     fn insert(&mut self, value: T) {
         //TODO
+        if self.root.is_none() {
+            self.root = Some(Box::new(TreeNode::new(value)))
+        }
+        else{
+            self.root.as_mut().unwrap().insert(value);
+        }
     }
 
     // Search for a value in the BST
     fn search(&self, value: T) -> bool {
+        if self.root.is_none() {
+            return false;
+        }
         //TODO
-        true
+        self.root.as_ref().unwrap().search(value)
     }
 }
 
@@ -67,6 +75,40 @@ where
     // Insert a node into the tree
     fn insert(&mut self, value: T) {
         //TODO
+        if value > self.value{
+            if self.right.is_none(){
+                self.right = Some(Box::new(TreeNode::new(value)));
+            }
+            else{
+                self.right.as_mut().unwrap().insert(value);
+            }
+        }
+        else if value < self.value{
+            if self.left.is_none(){
+                self.left = Some(Box::new(TreeNode::new(value)));
+            }
+            else{
+                self.left.as_mut().unwrap().insert(value);
+            }
+        }
+    }
+    fn search(&self, value: T) -> bool{
+        let mut a = self;
+        while value != a.value {
+            while value < a.value{
+                if a.left.is_none(){
+                    return false;
+                }
+                a = &a.left.as_ref().unwrap() ;
+            }
+            while value > a.value{
+                if a.right.is_none(){
+                    return false;
+                }
+                a = &a.right.as_ref().unwrap() ;
+            }
+        }
+        true
     }
 }
 
@@ -89,7 +131,6 @@ mod tests {
         bst.insert(2);
         bst.insert(4);
 
-        
         assert_eq!(bst.search(5), true);
         assert_eq!(bst.search(3), true);
         assert_eq!(bst.search(7), true);

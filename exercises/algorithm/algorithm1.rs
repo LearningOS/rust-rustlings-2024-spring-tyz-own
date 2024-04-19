@@ -2,8 +2,8 @@
 	single linked list merge
 	This problem requires you to merge two ordered singly linked lists into one ordered singly linked list
 */
-// I AM NOT DONE
 
+use std::collections::BTreeSet;
 use std::fmt::{self, Display, Formatter};
 use std::ptr::NonNull;
 use std::vec::*;
@@ -69,14 +69,24 @@ impl<T> LinkedList<T> {
             },
         }
     }
-	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
-	{
-		//TODO
-		Self {
-            length: 0,
-            start: None,
-            end: None,
+	pub fn merge(mut list_a:LinkedList<T>,mut list_b:LinkedList<T>) -> Self
+	where T: Ord + Copy
+    {
+        let mut set = BTreeSet::new();
+        let a = list_a.length;
+        let b = list_b.length;
+        for i in 0..a {
+            set.insert(*list_a.get(i as i32).unwrap());
         }
+        for i in 0..b {
+            set.insert(*list_b.get(i as i32).unwrap());
+        }
+        let mut list_c = LinkedList::<T>::new();
+        for i in set {
+            list_c.add(i);
+        }
+        // list_c.length = a + b;
+        list_c
 	}
 }
 
