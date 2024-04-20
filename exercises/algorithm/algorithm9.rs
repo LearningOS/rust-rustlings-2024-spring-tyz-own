@@ -39,12 +39,12 @@ where
     where T:Copy{
         //TODO
         if self.count == 0{
-            println!("{}",self.items.len());
+            // println!("{}",self.items.len());
             self.items.push(value);
             self.count = 1;
         }
         else{
-            println!("{}",self.items.len());
+            // println!("{}",self.items.len());
             for i in 1..=self.count{
                 if (self.comparator)(&value, &self.items[i]){
                     self.items.insert(i,value);
